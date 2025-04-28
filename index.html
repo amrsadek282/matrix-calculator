@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Calculator by Amr Sadek</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.4.2/math.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="flex flex-col items-center min-h-screen text-white">
+    <canvas id="matrixRain" class="matrix-rain"></canvas>
+    <div class="fallback-bg hidden"></div>
+
+    <nav class="w-full p-4 flex justify-end items-center z-10">
+        <button id="themeToggle" class="theme-toggle">
+            <div class="toggle-icon">
+                <i class="fas fa-moon"></i>
+                <i class="fas fa-sun"></i>
+            </div>
+        </button>
+    </nav>
+
+    <h1 class="text-4xl font-bold text-neon mb-6 z-10 animate-fade-in">Matrix Calculator</h1>
+
+    <div id="welcomeModal" class="modal">
+        <div class="modal-content animate-fade-in">
+            <h2 class="text-3xl font-bold mb-4 text-neon">Matrix Calculator Pro</h2>
+            <p class="mb-4 text-gray-300">A futuristic tool for matrix operations. Crafted by Amr Sadek.</p>
+            <button onclick="closeModal()" class="action-btn">Start Calculating</button>
+        </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <main
+        class="bg-black bg-opacity-80 p-6 rounded-lg shadow-xl w-full max-w-3xl z-10 animate-fade-in backdrop-blur-md border border-neon">
+        <div class="mb-6 animate-slide-up">
+            <label class="block mb-2 font-semibold text-neon">Matrix A Size (Rows x Columns):</label>
+            <div class="flex space-x-2">
+                <input id="rowsA" type="number" min="1" max="5" value="2" class="input-field">
+                <input id="colsA" type="number" min="1" max="5" value="2" class="input-field">
+            </div>
+        </div>
+        <div id="matrixA" class="matrix-grid mb-6 animate-slide-up" style="animation-delay: 0.1s;"></div>
+
+        <div class="mb-6 animate-slide-up" style="animation-delay: 0.2s;">
+            <label class="block mb-2 font-semibold text-neon">Matrix B Size (Rows x Columns):</label>
+            <div class="flex space-x-2">
+                <input id="rowsB" type="number" min="1" max="5" value="2" class="input-field">
+                <input id="colsB" type="number" min="1" max="5" value="2" class="input-field">
+            </div>
+        </div>
+        <div id="matrixB" class="matrix-grid mb-6 animate-slide-up" style="animation-delay: 0.3s;"></div>
+
+        <div class="mb-6 animate-slide-up" style="animation-delay: 0.4s;">
+            <label class="block mb-2 font-semibold text-neon">Select Operation:</label>
+            <div class="custom-select">
+                <select id="operation">
+                    <option value="sum">Sum (A + B)</option>
+                    <option value="minus">Minus (A - B)</option>
+                    <option value="transpose">Transpose (A)</option>
+                    <option value="multiply">Multiplication (A × B)</option>
+                    <option value="inverse">Inverse (A)</option>
+                </select>
+                <i class="fas fa-chevron-down select-icon text-neon"></i>
+            </div>
+        </div>
+
+        <div class="flex space-x-4 animate-slide-up" style="animation-delay: 0.5s;">
+            <button onclick="calculate()" class="action-btn w-full relative">
+                <span id="calcText">Calculate</span>
+                <div id="calcLoader" class="loader hidden"></div>
+            </button>
+            <button onclick="clearAll()" class="action-btn w-full">Clear All</button>
+        </div>
+
+        <div id="result"
+            class="mt-6 p-4 bg-black bg-opacity-80 rounded-lg hidden animate-slide-up backdrop-blur-md border border-neon"
+            style="animation-delay: 0s;">
+            <h3 class="font-semibold mb-2 text-neon">Result:</h3>
+            <div id="resultMatrix" class="matrix-grid"></div>
+            <div class="flex space-x-4 mt-4">
+                <button onclick="exportResult()" class="action-btn w-full">Export Result</button>
+                <button onclick="copyResult()" class="action-btn w-full">Copy Result</button>
+            </div>
+        </div>
+    </main>
+
+    <div
+        class="copyright-bar mt-6 text-sm z-10 flex flex-col items-center bg-black bg-opacity-80 backdrop-blur-md py-4 rounded-lg border border-neon">
+        <p class="text-gray-400">© 2025 Amr Sadek. All Rights Reserved.</p>
+        <div class="flex space-x-4 mt-2">
+            <a href="https://www.facebook.com/share/1HHYQvCqn7/?mibextid=qi2Omg" target="_blank"
+                class="social-icon text-neon hover:text-white">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/amr-sadek-75a23a242/" target="_blank"
+                class="social-icon text-neon hover:text-white">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
